@@ -13,20 +13,47 @@
 # you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
-title: thegitm8.github.io
+name: antlike Tech
+title: antlike Tech
 email: mail@gitm8.com
+copyright:
+  year:             2017
+  name:             GitM8
+
 description: > # this means to ignore newlines until "baseurl:"
-  Write an awesome description for your new site here. You can edit this
-  line in _config.yml. It will appear in your document head meta (for
-  Google search results) and in your feed.xml site description.
+  My personal blog and project space. From time to time writing articles about tech stuff
+  (mostly node.js and javascript). You can also find the slides from my meetup talks as well
+  as documentation for my open source projects.
 baseurl: "" # the subpath of your site, e.g. /blog
+permalink: /blog/:title.html
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
+excerpt_separator: <!--more-->
+
+author:
+  twitter: gitm8
+  github: thegitm8
+  email: mail@gitm8.com
+
 twitter_username: gitm8
 github_username:  thegitm8
 
+nav:
+  - name: "Projects"
+    url: "/projects"
+  - name: "Slides"
+    url: "/slides"
+  - name: "Blog"
+    url: "/blog"
+  - name: "About"
+    url: "/about"
+
+
+paginate: 3
+paginate_path: /blog/page:num/
+
 # Build settings
 markdown: kramdown
-theme: minima
+# theme: jekyll-theme-minimal
 gems:
   - jekyll-feed
 exclude:

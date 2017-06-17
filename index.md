@@ -1,4 +1,0 @@
-# Welcome site
-
-test
-
