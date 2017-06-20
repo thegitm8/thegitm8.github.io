@@ -26,7 +26,7 @@ description: > # this means to ignore newlines until "baseurl:"
   as documentation for my open source projects.
 baseurl: "" # the subpath of your site, e.g. /blog
 permalink: /blog/:title.html
-url: "www.antlike.tech"
+url: "http://www.antlike.tech"
 # url: "http://localhost:4000"
 excerpt_separator: <!--more-->
 
