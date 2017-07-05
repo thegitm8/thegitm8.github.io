@@ -15,28 +15,29 @@
 # in the templates via {{ site.myvariable }}.
 name: antlike tech
 title: antlike Tech
-email: mail@antlike.tech
-copyright:
-  year: 2017
-  name: R. Docter
+email: website@antlike.tech
 
-description: > # this means to ignore newlines until "baseurl:"
+
+description: >
   My personal blog and project space. From time to time writing articles about tech stuff
   (mostly node.js and javascript). You can also find the slides from my meetup talks as well
   as documentation for my open source projects.
-baseurl: "" # the subpath of your site, e.g. /blog
+baseurl: ""
 permalink: /blog/:title.html
 url: "http://www.antlike.tech"
 # url: "http://localhost:4000"
 excerpt_separator: <!--more-->
 
 author:
+  name: Robert Docter
   twitter: gitm8
   github: thegitm8
-  email: mail@antlike.tech
+  email: website@antlike.tech
 
-twitter_username: gitm8
-github_username:  thegitm8
+copyright:
+  year: 2017
+  name: R. Docter
+  email: mail@antlike.tech
 
 nav:
   - name: "Projects"

@@ -1,0 +1,93 @@
+---
+title: Node.js Meetup HH - Node.js and the single thread (2017-07-11)
+layout: presentation
+permalink: /slides/2017-07-11-nodejs-meetup-hamburg-multithreading-in-nodejs
+theme: night
+transition: convex
+---
+<section>
+	<h3>Work in progress</h3>
+	<p>This is a presentation (to be) for the Node.js Meethub in Hamburg on July the 11th.</p>
+	<aside class="notes">
+		Remove this slide before presentation.
+	</aside>
+</section>
+
+<!-- Slide 1 -->
+<section>
+	<h3>Node.js and the single thread</h3>
+	<ul>
+		<li>
+			<p class="fragment highlight-current-blue">
+				What is a single thread
+			</p>
+		</li>
+		<li>
+			<p class="fragment highlight-current-blue">
+				Is node.js single threaded
+			</p>
+		</li>
+		<li>
+			<p class="fragment highlight-current-blue">
+				Making use of threads in Node.js
+			</p>
+		</li>
+	</ul>
+</section>
+
+<!-- Slide 2 -->
+<section>
+	<h3>"Node.js' single thread model is one of the greatest disadvantages for developing Node.js software!"</h3>
+	<aside class="notes">
+		Ask audience if they agree with the statement.
+	</aside>
+</section>
+
+<!-- Slide 3 -->
+<section>
+	<h3>HEADER</h3>
+	<p>text</p>
+	<aside class="notes">
+		test
+	</aside>
+</section>
+
+<!-- Slide 4 -->
+<section>
+	<h3>Test code highlighting</h3>
+	<pre><code data-trim data-noescape>
+const { spawn } = require('child_process');
+const ls = spawn('ls', ['-lh', '/usr']);
+
+ls.stdout.on('data', (data) => {
+  console.log(`stdout: ${data}`);
+});
+<div class="fragment highlight-current-blue">
+ls.stderr.on('data', (data) => {
+  console.log(`stderr: ${data}`);
+});
+</div>
+ls.on('close', (code) => {
+  console.log(`child process exited with code ${code}`);
+});
+	</code></pre>
+	<aside class="notes">
+	</aside>
+</section>
+
+<!-- Slide LAST -->
+<section>
+	<h3>Who am me?</h3>
+	<p>
+		<h6>Robert Docter | Software Developer</h6>
+		<span>Developing all Bank connections <a href="https://www.figo.io/">@figo</a>.</span>
+		<br /><br />
+		<ul>
+			<li>Twitter: <a href="https://twitter.com/gitm8">@gitm8</a></li>
+			<li>Github: <a href="https://github.com/thegitm8">thegitm8</a></li>
+			<li>Website: <a href="http://www.antlike.tech">www.antLike.tech</a></li>
+		</ul>
+	</p>
+	<aside class="notes">
+	</aside>
+</section>
