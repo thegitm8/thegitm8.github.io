@@ -13,12 +13,12 @@
 # you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
-name: antlike Tech
+name: antlike tech
 title: antlike Tech
-email: mail@gitm8.com
+email: mail@antlike.tech
 copyright:
-  year:             2017
-  name:             GitM8
+  year: 2017
+  name: R. Docter
 
 description: > # this means to ignore newlines until "baseurl:"
   My personal blog and project space. From time to time writing articles about tech stuff
@@ -33,7 +33,7 @@ excerpt_separator: <!--more-->
 author:
   twitter: gitm8
   github: thegitm8
-  email: mail@gitm8.com
+  email: mail@antlike.tech
 
 twitter_username: gitm8
 github_username:  thegitm8

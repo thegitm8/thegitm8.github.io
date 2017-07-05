@@ -6,3 +6,15 @@ sitemap: false
 @import "typography";
 @import "highlighter";
 @import "site";
+
+
+
+/*--------------------------
+  antlike.tech customizations
+  -------------------------- */
+
+#indexPagePortrait {
+  border-radius: 50%;
+  float: left;
+  margin: 0px 24px 0px 0px;
+}
