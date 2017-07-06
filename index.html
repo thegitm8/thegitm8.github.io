@@ -3,14 +3,14 @@ layout: default
 ---
 <p>
 	<img
-		src="{{ site.url }}/assets/images/robert_docter_antlike_tech_portrait.jpg"
+		src="{{ "/assets/images/robert_docter_antlike_tech_portrait.jpg" | prepend: site.url }}"
 		alt="Robert Docter <mail@antlike.tech> (http://www.antlike.tech)"
 		id="indexPagePortrait"
 		width="150px"
 		height="150px"
 	/>
 
-	This is my personal blog and project space. From time to time I write articles about tech stuff (mostly node.js and javascript). You can also find the slides from my talks as well as documentation for my open source projects.
+	This is my personal <a href="{{ "/blog" | prepend: site.url }}">blog</a> and <a href="{{ "/projects" | prepend: site.url }}">project space</a>. From time to time I write articles about tech stuff (mostly Node.js and Javascript). You can also find the <a href="{{ "/slides" | prepend: site.url }}">slides from my talks</a> as well as documentation for my open source projects.
 	<br /><br />
 	Right now, I'm focused on node.js scaling and performance.
 	<br /><br />
