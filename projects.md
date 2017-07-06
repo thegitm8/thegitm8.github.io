@@ -13,5 +13,5 @@ Easy to use, minimalistic cluster communication tool.
 #### [cluster-cerebellum](https://github.com/thegitm8/cluster-cerebellum) [![version](https://img.shields.io/npm/v/cluster-cerebellum.svg)](https://www.npmjs.com/package/cluster-cerebellum)
 (node.js) cluster controller.
 
-#### [npmpty](https://github.com/thegitm8/npmpty)
+#### [npmpty](https://github.com/thegitm8/npmpty) [![version](https://img.shields.io/npm/v/npmpty.svg)](https://www.npmjs.com/package/npmpty)
 Module bootstrapper and npm/git integration for node.js module developers.
