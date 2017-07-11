@@ -5,89 +5,210 @@ permalink: /slides/2017-07-11-nodejs-meetup-hamburg-multithreading-in-nodejs
 theme: night
 transition: convex
 ---
-<section>
-	<h3>Work in progress</h3>
-	<p>This is a presentation (to be) for the Node.js Meethub in Hamburg on July the 11th.</p>
-	<aside class="notes">
-		Remove this slide before presentation.
-	</aside>
-</section>
 
 <!-- Slide 1 -->
 <section>
-	<h3>Node.js and the single thread</h3>
-	<ul>
-		<li>
-			<p class="fragment highlight-current-blue">
-				What is a single thread
-			</p>
-		</li>
-		<li>
-			<p class="fragment highlight-current-blue">
-				Is node.js single threaded
-			</p>
-		</li>
-		<li>
-			<p class="fragment highlight-current-blue">
-				Making use of threads in Node.js
-			</p>
-		</li>
-	</ul>
+	<h2>Multiple threads/processes in Node.js</h2>
 </section>
 
-<!-- Slide 2 -->
+
+
+
+
+
+
+<!-- slide 2 -->
 <section>
-	<h3>"Node.js' single thread model is one of the greatest disadvantages for developing Node.js software!"</h3>
+	<h3>Robert Docter</h3>
+	<span>
+		Developing access-to-bank solutions <a href="https://www.figo.io/">@figo</a>.
+	</span>
+	<br /><br />
+	<span>
+		Especially interested in Node.js <span style="font-weight: bolder;">performance</span> and <span style="font-weight: bolder;">scalability</span>, as well as <span style="font-weight: bolder;">Best Practices in module development</span>.
+	</span>
+	<br /><br />
+	<ul>
+		<li>Twitter: <a href="https://twitter.com/gitm8">@gitm8</a></li>
+		<li>Github: <a href="https://github.com/thegitm8">thegitm8</a></li>
+		<li>Website: <a href="http://www.antlike.tech">www.antLike.tech</a></li>
+	</ul>
 	<aside class="notes">
-		Ask audience if they agree with the statement.
 	</aside>
 </section>
+
+
+
 
 <!-- Slide 3 -->
 <section>
-	<h3>HEADER</h3>
-	<p>text</p>
-	<aside class="notes">
-		test
-	</aside>
+	<h3>"Node.js runs on a sinlge thread!"</h3>
 </section>
 
 <!-- Slide 4 -->
 <section>
-	<h3>Test code highlighting</h3>
-	<pre><code data-trim data-noescape>
-const { spawn } = require('child_process');
-const ls = spawn('ls', ['-lh', '/usr']);
+	<h3>The problem Node.js tries to solve:</h3>
+	<pre>
+		<code data-trim data-noescape>
+			const user = db.query({ user: 'someUser' })
 
-ls.stdout.on('data', (data) => {
-  console.log(`stdout: ${data}`);
-});
-<div class="fragment highlight-current-blue">
-ls.stderr.on('data', (data) => {
-  console.log(`stderr: ${data}`);
-});
-</div>
-ls.on('close', (code) => {
-  console.log(`child process exited with code ${code}`);
-});
-	</code></pre>
-	<aside class="notes">
-	</aside>
+			// ... rest of the program
+		</code>
+	</pre>
+	<p class="fragment">Blocking IO!</p>
 </section>
 
-<!-- Slide LAST -->
+<!-- Slide 5 -->
 <section>
-	<h3>Who am me?</h3>
+	<h3>Multithreading to the rescue?</h3>
+	<h5 class="fragment">turns out, multithreading can be hard</h5>
+	<ul>
+		<li class="fragment">shared memory and locks make systems hard to reason about</li>
+		<li class="fragment">interprocess communication</li>
+		<li class="fragment">managing state</li>
+		<li class="fragment">guarantee thread safety with 3rd party packages</li>
+	</ul>
+</section>
+
+<!-- Slide 6 -->
+<section>
+	<h3>Node.js design</h3>
+
+	Eventloop
+	<br />&darr;<br />
+	V8
+	<br />&darr;<br />
+	libuv
+	<br />&darr;<br />
+	POSIX syscalls
+	<br />&darr;<br />
+	Threadpool
+</section>
+
+<!-- slide 7 -->
+<section>
+	<h3>The Eventloop</h3>
+	<blockquote>
+		"...is a programming construct that waits for and dispatches events or messages in a program." - <a href="https://en.wikipedia.org/wiki/Event_loop" alt="WikiPedia event loop">Wikipedia</a>
+	</blockquote>
+	<p class="fragment">So...</p>
+</section>
+
+<!-- slide 8 -->
+<section>
 	<p>
-		<h6>Robert Docter | Software Developer</h6>
-		<span>Developing all Bank connections <a href="https://www.figo.io/">@figo</a>.</span>
-		<br /><br />
-		<ul>
-			<li>Twitter: <a href="https://twitter.com/gitm8">@gitm8</a></li>
-			<li>Github: <a href="https://github.com/thegitm8">thegitm8</a></li>
-			<li>Website: <a href="http://www.antlike.tech">www.antLike.tech</a></li>
-		</ul>
+		... instead of blocking everything
+		<pre>
+			<code data-trim data-noescape>
+				const user = db.query({ user: 'someUser' })
+			</code>
+		</pre>
 	</p>
-	<aside class="notes">
-	</aside>
+	<p class="fragment">
+		we can do
+		<pre class="fragment">
+			<code data-trim data-noescape>
+				db.query({ user: 'someUser' }, user => /* do something */)
+			</code>
+		</pre>
+	</p>
+	<p class="fragment">
+		and Node.js takes care of the rest...
+	</p>
+</section>
+
+
+<!-- slide 9 -->
+<section>
+	Example
+	<pre>
+		<code data-trim data-noescape>
+			const http = require('http')
+			const fs = require('fs')
+			const server = http.createServer((req, res) => {
+
+				fs.readFile(
+					'/path/to/file',
+					{ encoding: 'utf8' },
+					(err, data) => {
+						res.send(data)
+					}
+				)
+
+			}).listen()
+		</code>
+	</pre>
+</section>
+
+<section>
+	But, wait, there's more...
+</section>
+
+<!-- slide 10 -->
+<section>
+	<p>Node.js provides different tools to make working with multiple processes even easier</p>
+	<ul>
+		<li>spawn</li>
+		<li>exec</li>
+		<li>fork</li>
+		<li>cluster</li>
+	</ul>
+</section>
+
+<section>
+	<h3>spawn</h3>
+	<p>the base case</p>
+	<ul>
+		<li>control execution environment with options</li>
+	</ul>
+</section>
+
+<section>
+	<h3>exec and execFile</h3>
+	<p>execute commands on the system outside of Node.js</p>
+	<ul>
+		<li>exec: spawns a shell and runs a command within that shell</li>
+		<li>execFile: does the same without spawning a shell</li>
+	</ul>
+	<pre>
+		<code data-trim data-noescape>
+			const userName = execFileSync('git config user.name')
+		</code>
+	</pre>
+</section>
+
+<section>
+	<h3>fork</h3>
+	<p>create new Node.js processes and attaches an IPC channel</p>
+	<ul>
+		<li>adds an additional IPC channel</li>
+	</ul>
+</section>
+
+<section>
+	<h3>cluster</h3>
+	<p>solving same similar tasks</p>
+</section>
+
+<section>
+	<h3>Dangers when forking...</h3>
+	<p>New forked processes require 30ms to start and have an overhead of 10MB (due to V8).</p>
+	<p class="fragment">So?</p>
+	<p class="fragment">Imagine the following</p>
+	<pre class="fragment">
+		<code data-trim data-noescape>
+			const { fork } = require('child_process')
+			const http = require('http')
+			const server = http.createServer((req, res) => {
+
+				const magic = fork('/path/to/module')
+				magic.on('message', res.send)
+
+			})
+		</code>
+	</pre>
+</section>
+
+<section>
+	<img src="{{ site.url }}/assets/images/thank_you_cat.gif" alt="Cat saying thank you" />
 </section>
