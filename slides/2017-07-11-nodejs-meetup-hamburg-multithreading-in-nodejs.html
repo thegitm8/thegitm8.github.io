@@ -9,6 +9,9 @@ transition: convex
 <!-- Slide 1 -->
 <section>
 	<h2>Multiple threads/processes in Node.js</h2>
+	<br />
+	<p>1. What Node is doing</p>
+	<p>2. What you can do</p>
 </section>
 
 
@@ -63,26 +66,11 @@ transition: convex
 	<h3>Multithreading to the rescue?</h3>
 	<h5 class="fragment">turns out, multithreading can be hard</h5>
 	<ul>
-		<li class="fragment">shared memory and locks make systems hard to reason about</li>
+		<li class="fragment">shared memory make systems hard to reason about</li>
 		<li class="fragment">interprocess communication</li>
 		<li class="fragment">managing state</li>
 		<li class="fragment">guarantee thread safety with 3rd party packages</li>
 	</ul>
-</section>
-
-<!-- Slide 6 -->
-<section>
-	<h3>Node.js design</h3>
-
-	Eventloop
-	<br />&darr;<br />
-	V8
-	<br />&darr;<br />
-	libuv
-	<br />&darr;<br />
-	POSIX syscalls
-	<br />&darr;<br />
-	Threadpool
 </section>
 
 <!-- slide 7 -->
@@ -92,6 +80,19 @@ transition: convex
 		"...is a programming construct that waits for and dispatches events or messages in a program." - <a href="https://en.wikipedia.org/wiki/Event_loop" alt="WikiPedia event loop">Wikipedia</a>
 	</blockquote>
 	<p class="fragment">So...</p>
+</section>
+
+<!-- Slide 6 -->
+<section>
+	<h3>Node.js design</h3>
+
+	Eventloop
+	<br />&darr;<br />
+	libuv
+	<br />&darr;<br />
+	POSIX syscalls
+	<br />&darr;<br />
+	Threadpool
 </section>
 
 <!-- slide 8 -->
@@ -140,13 +141,11 @@ transition: convex
 	</pre>
 </section>
 
-<section>
-	But, wait, there's more...
-</section>
 
 <!-- slide 10 -->
 <section>
-	<p>Node.js provides different tools to make working with multiple processes even easier</p>
+	<h3>Tools</h3>
+	<p>working with subprocesses made easy :)</p>
 	<ul>
 		<li>spawn</li>
 		<li>exec</li>
@@ -157,10 +156,39 @@ transition: convex
 
 <section>
 	<h3>spawn</h3>
-	<p>the base case</p>
-	<ul>
-		<li>control execution environment with options</li>
-	</ul>
+	<p>Define runtime of separate processes...</p>
+	<pre>
+		<code data-trim data-noescape>
+			const { spawn } = require('child_process')
+			const ls = spawn('ls', ['-lh', '/usr'], {
+				cwd: '/some/path',
+				env: { SOME_ENV: 'value'},
+				shell: 'bash'
+				pid: 1234,
+				gid: 5678
+			})
+		</code>
+	</pre>
+</section>
+
+<section>
+	<h3>spawn</h3>
+	<p>...and having a super easy interface to work with.</p>
+	<pre>
+		<code data-trim data-noescape>
+			ls.stdout.on('data', data => {
+				console.log(`Got data: ${data}`)
+			})
+
+			ls.stderr.on('data', data => {
+				console.log(`No! an error: ${data}`)
+			})
+
+			ls.on('close', code => {
+				console.log(`child process exited with code ${code}`)
+			})
+		</code>
+	</pre>
 </section>
 
 <section>
@@ -172,43 +200,83 @@ transition: convex
 	</ul>
 	<pre>
 		<code data-trim data-noescape>
-			const userName = execFileSync('git config user.name')
+			const userName = execFile('git config user.name')
+
+			userName.stdout.on('data', username => {
+				console.log(username)
+			})
 		</code>
 	</pre>
 </section>
 
 <section>
 	<h3>fork</h3>
-	<p>create new Node.js processes and attaches an IPC channel</p>
-	<ul>
-		<li>adds an additional IPC channel</li>
-	</ul>
+	<p>create new Node.js processes and attache an IPC channel</p>
+	<pre>
+		<code data-trim data-noescape>
+			const nodeProcess = fork('/path/to/file')
+
+			nodeProcess.send({ text: 'some text'})
+
+			// on the forked process
+			process.on('message', msg => {
+				console.log(msg.text)
+			})
+		</code>
+	</pre>
 </section>
 
 <section>
 	<h3>cluster</h3>
 	<p>solving same similar tasks</p>
+	<pre>
+		<code data-trim data-noescape>
+			const cluster = require('cluster')
+			const os = require('os')
+
+			if(cluster.isMaster) {
+
+				for(let i; i < os.cpus().lenght, i++) {
+					cluster.fork()
+				}
+
+			} else {
+
+				// do your stuff here
+
+			}
+		</code>
+	</pre>
 </section>
 
 <section>
 	<h3>Dangers when forking...</h3>
 	<p>New forked processes require 30ms to start and have an overhead of 10MB (due to V8).</p>
 	<p class="fragment">So?</p>
-	<p class="fragment">Imagine the following</p>
-	<pre class="fragment">
+	<p class="fragment">Imagine the following...</p>
+</section>
+
+<section>
+	<pre>
 		<code data-trim data-noescape>
 			const { fork } = require('child_process')
 			const http = require('http')
 			const server = http.createServer((req, res) => {
 
-				const magic = fork('/path/to/module')
-				magic.on('message', res.send)
+				const magic = fork('/path/to/magic/module')
+
+				magic.stdout.on('data', res.write)
+				magic.stdout.on('close', res.close)
 
 			})
 		</code>
 	</pre>
+	<p class="fragment">
+		For 100 concurrent connections we have an overhead of
+		<br /><br />
+		<span>10MB * 100 connections = ~1GB memory usage</span>
+	</p>
 </section>
-
 <section>
 	<img src="{{ site.url }}/assets/images/thank_you_cat.gif" alt="Cat saying thank you" />
 </section>
