@@ -115,33 +115,9 @@ transition: convex
 		</pre>
 	</p>
 	<p class="fragment">
-		and Node.js takes care of the rest...
+		and Node.js takes care of the rest :D
 	</p>
 </section>
-
-
-<!-- slide 9 -->
-<section>
-	Example
-	<pre>
-		<code data-trim data-noescape>
-			const http = require('http')
-			const fs = require('fs')
-			const server = http.createServer((req, res) => {
-
-				fs.readFile(
-					'/path/to/file',
-					{ encoding: 'utf8' },
-					(err, data) => {
-						res.send(data)
-					}
-				)
-
-			}).listen()
-		</code>
-	</pre>
-</section>
-
 
 <!-- slide 10 -->
 <section>
