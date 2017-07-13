@@ -1,44 +1,21 @@
-# Welcome to Jekyll!
-#
-# This config file is meant for settings that affect your whole blog, values
-# which you are expected to set up once and rarely edit after that. If you find
-# yourself editing this file very often, consider using Jekyll's data files
-# feature for the data you need to update frequently.
-#
-# For technical reasons, this file is *NOT* reloaded automatically when you use
-# 'bundle exec jekyll serve'. If you change this file, please restart the server process.
-
-# Site settings
-# These are used to personalize your new site. If you look in the HTML files,
-# you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
-# You can create any custom variable you would like, and they will be accessible
-# in the templates via {{ site.myvariable }}.
 name: antlike tech
 title: antlike Tech
 email: website@antlike.tech
-
-
 description: >
-  My personal blog and project space. From time to time writing articles about tech stuff
-  (mostly node.js and javascript). You can also find the slides from my meetup talks as well
+  Robert Docters personal blog and project space. Javascript and Node.js articles and tutorials, local meetup slides and videos as well
   as documentation for my open source projects.
 baseurl: ""
 permalink: /blog/:title.html
 url: "http://www.antlike.tech"
-# url: "http://localhost:4000"
-excerpt_separator: <!--more-->
 
 author:
   name: Robert Docter
+  image: /assets/images/robert_docter_antlike_tech_portrait.jpg
   twitter: gitm8
   github: thegitm8
   email: website@antlike.tech
 
-copyright:
-  year: 2017
-  name: R. Docter
-  email: mail@antlike.tech
-
+# Navigation
 nav:
   - name: "Projects"
     url: "/projects"
@@ -49,13 +26,14 @@ nav:
   - name: "About"
     url: "/about"
 
-
+# Blog settings
 paginate: 3
 paginate_path: /blog/page:num/
 
+excerpt_separator: <!--more-->
+
 # Build settings
 markdown: kramdown
-# theme: jekyll-theme-minimal
 gems:
   - jekyll-feed
 exclude:

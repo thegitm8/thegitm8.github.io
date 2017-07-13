@@ -1,19 +1,40 @@
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% if page.title %}{{ page.title }}{% else %}{{ site.name }}{% endif %}</title>
+    <meta charset="utf-8">
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/main.css" type="text/css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="{{site.description}}">
+    <meta name="author" content="{{site.author.name}}">
 
-  <!-- Font -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css' rel='stylesheet' type='text/css'>
-  <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono" rel="stylesheet">
+    <!-- Twiter Cards -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@{{site.author.twitter}}" />
+    <meta name="twitter:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.name }}{% endif %}" />
+    <meta name="twitter:description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}" />
+    <meta name="twitter:image" content="{{ site.author.image | prepend: site.url }}" />
 
-  <link rel="alternate" type="application/rss+xml" title="RSS Feed for {{ site.name }}" href="{{ site.baseurl }}/feed.xml" />
+    <!-- Facebook Open Graph -->
+    <meta property=”og:title” content=”{% if page.title %}{{ page.title }}{% else %}{{ site.name }}{% endif %}”/>
+    <meta property=”og:type” content=”article”/>
+    <meta property=”og:image” content=”{{ site.author.image | prepend: site.url }}”/>
+    <meta property=”og:url” content=”{% if page.url %}{{ page.url }}{% else %}{{ site.url }}{% endif %}”/>
+    <meta property=”og:description” content=”{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}”/>
+    <!-- <meta property=”fb:admins” content=”USER_ID”/> -->
 
+    <!-- Google -->
+    <link rel=”author” href=”https://plus.google.com/113844560148227110939”/>
 
-  {% include google-analytics.html %}
+    <title>{% if page.title %}{{ page.title }}{% else %}{{ site.name }}{% endif %}</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/main.css" type="text/css">
+
+    <!-- Font -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono" rel="stylesheet">
+
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for {{ site.name }}" href="{{ site.baseurl }}/feed.xml" />
+
+    {% include google-analytics.html %}
 
 </head>
