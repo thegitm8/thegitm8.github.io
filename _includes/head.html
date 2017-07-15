@@ -1,6 +1,9 @@
 <head>
+
     <meta charset="utf-8">
 
+    <!-- Meta -->
+    <title>{% if page.title %}{{ page.title }}{% else %}{{ site.name }}{% endif %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="{{site.description}}">
     <meta name="author" content="{{site.author.name}}">
@@ -21,17 +24,22 @@
     <!-- <meta property=”fb:admins” content=”USER_ID”/> -->
 
     <!-- Google -->
-    <link rel=”author” href=”https://plus.google.com/113844560148227110939”/>
+    <link rel=”author” href=”https://plus.google.com/113844560148227110939” />
 
-    <title>{% if page.title %}{{ page.title }}{% else %}{{ site.name }}{% endif %}</title>
+    <!-- icons -->
+    <link rel="icon" type="image/x-icon" href="{{ "/assets/icons/favicon.ico" | prepend: site.url }}" />
+    <link rel="apple-touch-icon" href="{{ "/assets/icons/touch-icon-iphone.png" | prepend: site.url }}" />
+    <link rel="apple-touch-icon" sizes="152x152" href="{{ "/assets/icons/touch-icon-ipad.png" | prepend: site.url }}" />
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ "/assets/icons/touch-icon-iphone-retina.png" | prepend: site.url }}" />
+    <link rel="apple-touch-icon" sizes="167x167" href="{{ "/assets/icons/touch-icon-ipad-retina.png" | prepend: site.url }}" />
 
     <!-- CSS -->
-    <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/main.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="{{ "/assets/css/main.css" | prepend: site.baseurl }}">
 
     <!-- Font -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css' rel='stylesheet' type='text/css'>
-    <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Ubuntu+Mono">
 
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for {{ site.name }}" href="{{ site.baseurl }}/feed.xml" />
 
